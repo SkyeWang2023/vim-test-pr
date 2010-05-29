@@ -2371,6 +2371,7 @@ restored. (Luc St-Louis)
 Patch to support horizontal scroll wheel in GTK. Untested. (Bjorn Winckler,
 2010 Jun 30)
 
+<<<<<<< HEAD
 Add an option for a minimal text length before inserting a line break for
 'textwidth'.  Avoids very short lines when a very long word follows.
 (Kartik Agaram)
@@ -2387,6 +2388,103 @@ Better plugin support (not plugin manager, see elsewhere for that):
   keeping the last N pressed keys, so that they do not need to be mapped?
 - equivalent of netbeans_beval_cb().  With an autocommand?
 - Add something to enable debugging when a remote message is received.
+=======
+Vim 7.3:
+- using NSIS 2.46: install on Windows 7 works, but no "Edit with Vim" menu.
+   Use register_shell_extension()? (George Reilly, 2010 May 26)
+   Ron's version: http://dev.ronware.org/p/vim/finfo?name=gvim.nsi
+- Persistent undo bugs / fixes:
+    - Memory leak reproduced by Dominique Pelle, 2010 May 28.
+    - When there is no undo info (undolevels negative), delete the undo file.
+    - Need to check all values for evil manipulation.
+    - Add undofile(name): get undo file name for buffer "name".
+- patch for unused functions. (Dominique Pelle, 2010 May 29)
+- Also crypt the undo file.
+- Also crypt the swap file, each block separately.  Change mf_write() and
+    mf_read().  How to get b_p_key to these functions?
+- Do profiling on sha256 code to find obvious bottlenecks.
+- Do profiling on crypt code to find obvious bottlenecks.
+- Make 'clipboard' global-local, for "html"?  Christian J. Robinson.
+Patches to include:
+- Extend test62 for gettabvar() and settabvar(). (Yegappan Lakshmanan, 2010
+  May 23)
+- Use off_t instead of long for bytes in a buffer. (James Vega, 2010 May 22,
+  update next day)
+- Include conceal patch?
+  http://vince.negri.googlepages.com/
+  http://vim.wikia.com/wiki/Patch_to_conceal_parts_of_lines
+- Patch for Lisp support with ECL (Mikael Jansson, 2008 Oct 25)
+- Minor patches from Dominique Pelle, 2010 May 15
+- Gvimext patch to support wide file names. (Szabolcs Horvat 2008 Sep 10)
+- Patch to support netbeans for Mac. (Kazuki Sakamoto, 2009 Jun 25)
+- Patch to support clipboard for Mac terminal. (Jjgod Jiang, 2009 Aug 1)
+- Patch to support :browse for more commands. (Lech Lorens, 2009 Jul 18)
+- Patch to improve javascript indenting. (Hari Kumar G, 2010 May 22)
+- Patch to add diff functionality to 2html.vim. (Christian Brabandt, 2009 Dec
+  15)
+- Win32: patch for better font scaling. (George Reilly, 2009 Mar 26) 
+- Patch for completion of ":find" arguments. (Nazri Ramliy, 2009 Feb 22, 26)
+  8   For ":find" and ":sfind" expand files found in 'path'.
+  Update 2009 Mar 28.
+- Patch for vertical line at certain column position, 'guidecolumn' option.
+  (Pankaj Garg, 2009 Apr 14, aka Lone, Apr 15)
+  Update 2009 May 2, 'margincolumn'
+  Alternative patch. (2010 Feb 2, Gregor Uhlenheuer, update Apr 18 2010)
+  Fix by Lech Lorens, Apr 19
+- Add different highlighting for a fold line depending on the fold level.
+  Patch. (Noel Henson, 2009 Sep 13)
+- Patch to make synIDattr() work for GUI attributes in Vim without GUI
+  feature.  (Matt Wozniski, 2009 Apr 15)
+  Patch go make gui highlight settings work in Vim without +gui feature.
+  (Matt Wozniski, 2009 Mar 27)
+- Patch for supporting #rrggbb in color terminals.  (Matt Wozniski)
+6   In the quickfix window statusline add the command used to get the list of
+    errors, e.g. ":make foo", ":grep something *.c".
+    Patch by Lech Lorens, 2009 Mar 23.
+    Comments from Andreas Bernauer 24th, Dominique Pelle 24th
+    Docs patch by Dominique Pelle, Mar 25
+    Update 2009 Mar 28.
+    Fix for invalid memory access. (Lech Lorens, 2009 Apr 17)
+- Make do_do_join() work faster.  Could at least do a binary search way of
+  doing this.  Hint from Dominique Pelle, Dec 10; Lee Naish, Dec 11.
+  Patch from Milan Vancura, 2010 May 16.
+- Fix for test29. (Milan Vancura, 2010 May 16)
+- Disable setting 'encoding' from a modeline?  It usually causes problems,
+  can't do any good.  (Patch from Patrick Texier, 2008 Dec 9)
+- Redraw problem when appending digraph causes line to wrap. (James Vega, 2007
+  Sep 18)  Patch by Ian Kelling, 2008 Aug 8.
+- Patch for colorscheme submenu. (Juergen Kraemer, 2008 Aug 20)
+- 9   Make it possible to drag a tab page label to another position with the
+    mouse.
+  Patch by Paul B. Mahol, 2008 Aug 29.
+- Mac: Patch to disable antialias. (LC Mi, 2008 Aug 23)  Tested on 10.5 and
+  10.4.
+- Patch for adding "J" flag to 'cinoptions': placement of jump label.  (Manuel
+  Konig, 2010 Feb 19)  Update by Lech Lorens, Feb 22.
+-   Add Lua interface? (Wolfgang Oertl) patch by Luis Carvalho, 2008 Sep 5
+	Patch for Make_ming.mak from Paul Moore (2008 Sep 1)
+      http://code.google.com/p/vim-iflua/  Download  vim72-lua-0.7.patch.gz
+Needs some work:
+- Have a look at patch to enable screen access from Python. (Marko Mahnic,
+  2010 Apr 12)
+- Patch for Python 3 support. (Roland Puntaier, 2009 Sep 22)
+  Includes changes for omnicompletion.
+  Needs some more testing.
+  Update 2010 Apr 20, patch by Andy Kittner, May 16
+  Build the MS-Windows version with Python 2.6.5 and 3.1.2?
+-   Easier/standard way to disable default plugins.
+-   ":{range}source": source the lines from the current file.
+	You can already yank lines and use :@" to execute them.
+	Most of do_source() would not be used, need a new function.
+	It's easy when not doing breakpoints or profiling.
+Probably not now:
+- Use timestamps for undo, so that a version a certain time ago can be found
+  and info before some time/date can be flushed. 'undopersist' gives maximum
+  time to keep undo: "3h", "1d", "2w", "1y", etc.
+Before (beta) release:
+- Add fixes for 7.2 to version7.txt
+- Rename vim73 branch to default (hints: Xavier de Gaye, 2010 May 23)
+>>>>>>> 9db580634 (Various improvements to undo file code to make it more robust.)
 
 
 More patches:

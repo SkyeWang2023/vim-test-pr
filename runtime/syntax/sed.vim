@@ -73,6 +73,7 @@ syn region sedReplacement64 matchgroup=Special start=+@\(\\\\\|\\@\)*+ skip=+[^\
 syn match sedST	"[sy]" nextgroup=sedRegexp\d\+
 
 
+<<<<<<< HEAD
 hi def link sedAddress		Macro
 hi def link sedACI		NONE
 hi def link sedBranch		Label
@@ -94,6 +95,38 @@ hi def link sedSpecial		Special
 hi def link sedWhitespace	NONE
 if exists("highlight_sedtabs")
 hi def link sedTab		Todo
+=======
+    HiLink sedAddress		Macro
+    HiLink sedACI		NONE
+    HiLink sedBranch		Label
+    HiLink sedComment		Comment
+    HiLink sedDelete		Function
+    HiLink sedError		Error
+    HiLink sedFlag		Type
+    HiLink sedFlagwrite		Constant
+    HiLink sedFunction		Function
+    HiLink sedLabel		Label
+    HiLink sedLineCont		Special
+    HiLink sedPutHoldspc	Function
+    HiLink sedReplaceMeta	Special
+    HiLink sedRegexpMeta	Special
+    HiLink sedRW		Constant
+    HiLink sedSemicolon		Special
+    HiLink sedST		Function
+    HiLink sedSpecial		Special
+    HiLink sedWhitespace	NONE
+    if exists("highlight_sedtabs")
+	HiLink sedTab		Todo
+    endif
+    let __sed_i = char2nr(" ") " ASCII: 32, EBCDIC: 64
+    while __sed_i <= __sed_last
+	exe "HiLink sedRegexp".__sed_i		"Macro"
+	exe "HiLink sedReplacement".__sed_i	"NONE"
+	let __sed_i = __sed_i + 1
+    endwhile
+
+    delcommand HiLink
+>>>>>>> 9db580634 (Various improvements to undo file code to make it more robust.)
 endif
 let __sed_i = char2nr(" ") " ASCII: 32, EBCDIC: 64
 while __sed_i <= __sed_last
@@ -102,7 +135,10 @@ exe "hi def link sedReplacement".__sed_i	"NONE"
 let __sed_i = __sed_i + 1
 endwhile
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9db580634 (Various improvements to undo file code to make it more robust.)
 unlet __sed_i __sed_last __sed_delimiter __sed_metacharacters
 
 let b:current_syntax = "sed"

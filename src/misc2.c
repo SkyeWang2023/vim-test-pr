@@ -6101,9 +6101,13 @@ get3c(FILE *fd)
     int
 get4c(FILE *fd)
 {
+<<<<<<< HEAD
     /* Use unsigned rather than int otherwise result is undefined
      * when left-shift sets the MSB. */
     unsigned	n;
+=======
+    int		n;
+>>>>>>> 9db580634 (Various improvements to undo file code to make it more robust.)
 
     n = (unsigned)getc(fd);
     n = (n << 8) + (unsigned)getc(fd);

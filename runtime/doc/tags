@@ -4384,12 +4384,11 @@ E822	undo.txt	/*E822*
 E823	undo.txt	/*E823*
 E824	undo.txt	/*E824*
 E825	undo.txt	/*E825*
-E826	undo.txt	/*E826*
-E827	undo.txt	/*E827*
 E828	undo.txt	/*E828*
 E829	undo.txt	/*E829*
 E83	message.txt	/*E83*
 E830	undo.txt	/*E830*
+<<<<<<< HEAD
 E831	editing.txt	/*E831*
 E832	undo.txt	/*E832*
 E833	editing.txt	/*E833*
@@ -4399,6 +4398,8 @@ E836	if_pyth.txt	/*E836*
 E837	if_pyth.txt	/*E837*
 E838	netbeans.txt	/*E838*
 E839	insert.txt	/*E839*
+=======
+>>>>>>> 9db580634 (Various improvements to undo file code to make it more robust.)
 E84	windows.txt	/*E84*
 E840	insert.txt	/*E840*
 E841	map.txt	/*E841*
