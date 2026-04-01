@@ -529,9 +529,24 @@ block_insert(
 	}
 
 	if (has_mbyte && spaces > 0)
-	    // avoid copying part of a multi-byte character
-	    offset -= (*mb_head_off)(oldp, oldp + offset);
+	{
+	    int off;
 
+	    // Avoid starting halfway a multi-byte character.
+	    if (b_insert)
+	    {
+		off = (*mb_head_off)(oldp, oldp + offset + spaces);
+		spaces -= off;
+		count -= off;
+	    }
+	    else
+	    {
+		// spaces fill the gap, the character that's at the edge moves
+		// right
+		off = (*mb_head_off)(oldp, oldp + offset);
+		offset -= off;
+	    }
+	}
 	if (spaces < 0)  // can happen when the cursor was moved
 	    spaces = 0;
 
