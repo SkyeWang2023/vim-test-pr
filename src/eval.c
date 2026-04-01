@@ -3526,7 +3526,6 @@ eval7(
     char_u	*start_leader, *end_leader;
     int		ret = OK;
     char_u	*alias;
-    static	int recurse = 0;
 
     /*
      * Initialise variable so that clear_tv() can't mistake this for a
@@ -3552,15 +3551,6 @@ eval7(
 	++*arg;
 	return FAIL;
     }
-
-    // Limit recursion to 1000 levels.  At least at 10000 we run out of stack
-    // and crash.
-    if (recurse == 1000)
-    {
-	semsg(_(e_expression_too_recursive_str), *arg);
-	return FAIL;
-    }
-    ++recurse;
 
     switch (**arg)
     {
@@ -3791,8 +3781,6 @@ eval7(
      */
     if (ret == OK && evaluate && end_leader > start_leader)
 	ret = eval7_leader(rettv, FALSE, start_leader, &end_leader);
-
-    --recurse;
     return ret;
 }
 
