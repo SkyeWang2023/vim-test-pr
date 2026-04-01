@@ -462,13 +462,12 @@ win_redr_status(win_T *wp, int ignore_pum UNUSED)
 	p = NameBuff;
 	len = (int)STRLEN(p);
 
-	if ((bt_help(wp->w_buffer)
+	if (bt_help(wp->w_buffer)
 #ifdef FEAT_QUICKFIX
-		    || wp->w_p_pvw
+		|| wp->w_p_pvw
 #endif
-		    || bufIsChanged(wp->w_buffer)
-		    || wp->w_buffer->b_p_ro)
-		&& len < MAXPATHL - 1)
+		|| bufIsChanged(wp->w_buffer)
+		|| wp->w_buffer->b_p_ro)
 	    *(p + len++) = ' ';
 	if (bt_help(wp->w_buffer))
 	{
