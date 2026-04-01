@@ -971,7 +971,6 @@ VIM_init(void)
 #ifdef DYNAMIC_PERL
 static char *e_noperl = N_("Sorry, this command is disabled: the Perl library could not be loaded.");
 #endif
-static char *e_perlsandbox = N_("E299: Perl evaluation forbidden in sandbox without the Safe module");
 
 /*
  * ":perl"
@@ -1020,12 +1019,13 @@ ex_perl(exarg_T *eap)
 	vim_free(script);
     }
 
-    if (sandbox || secure)
+#ifdef HAVE_SANDBOX
+    if (sandbox)
     {
 	safe = perl_get_sv("VIM::safe", FALSE);
 # ifndef MAKE_TEST  /* avoid a warning for unreachable code */
 	if (safe == NULL || !SvTRUE(safe))
-	    emsg(_(e_perlsandbox));
+	    emsg(_("E299: Perl evaluation forbidden in sandbox without the Safe module"));
 	else
 # endif
 	{
@@ -1037,6 +1037,7 @@ ex_perl(exarg_T *eap)
 	}
     }
     else
+#endif
 	perl_eval_sv(sv, G_DISCARD | G_NOARGS);
 
     SvREFCNT_dec(sv);
@@ -1297,12 +1298,13 @@ do_perleval(char_u *str, typval_T *rettv)
 	ENTER;
 	SAVETMPS;
 
-	if (sandbox || secure)
+#ifdef HAVE_SANDBOX
+	if (sandbox)
 	{
 	    safe = get_sv("VIM::safe", FALSE);
 # ifndef MAKE_TEST  /* avoid a warning for unreachable code */
 	    if (safe == NULL || !SvTRUE(safe))
-		emsg(_(e_perlsandbox));
+		emsg(_("E299: Perl evaluation forbidden in sandbox without the Safe module"));
 	    else
 # endif
 	    {
@@ -1318,6 +1320,7 @@ do_perleval(char_u *str, typval_T *rettv)
 	    }
 	}
 	else
+#endif /* HAVE_SANDBOX */
 	    sv = eval_pv((char *)str, 0);
 
 	if (sv) {
