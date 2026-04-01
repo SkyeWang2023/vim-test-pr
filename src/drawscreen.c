@@ -464,13 +464,13 @@ win_redr_status(win_T *wp, int ignore_pum UNUSED)
 	    *(p + len++) = ' ';
 	if (bt_help(wp->w_buffer))
 	{
-	    vim_snprintf((char *)p + len, MAXPATHL - len, "%s", _("[Help]"));
+	    STRCPY(p + len, _("[Help]"));
 	    len += (int)STRLEN(p + len);
 	}
 #ifdef FEAT_QUICKFIX
 	if (wp->w_p_pvw)
 	{
-	    vim_snprintf((char *)p + len, MAXPATHL - len, "%s", _("[Preview]"));
+	    STRCPY(p + len, _("[Preview]"));
 	    len += (int)STRLEN(p + len);
 	}
 #endif
@@ -480,12 +480,12 @@ win_redr_status(win_T *wp, int ignore_pum UNUSED)
 #endif
 		)
 	{
-	    vim_snprintf((char *)p + len, MAXPATHL - len, "%s", "[+]");
-	    len += (int)STRLEN(p + len);
+	    STRCPY(p + len, "[+]");
+	    len += 3;
 	}
 	if (wp->w_buffer->b_p_ro)
 	{
-	    vim_snprintf((char *)p + len, MAXPATHL - len, "%s", _("[RO]"));
+	    STRCPY(p + len, _("[RO]"));
 	    len += (int)STRLEN(p + len);
 	}
 
