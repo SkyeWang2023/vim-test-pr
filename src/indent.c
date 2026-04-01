@@ -18,19 +18,18 @@
 /*
  * Set the integer values corresponding to the string setting of 'vartabstop'.
  * "array" will be set, caller must free it if needed.
- * Return FAIL for an error.
  */
     int
 tabstop_set(char_u *var, int **array)
 {
-    int	    valcount = 1;
-    int	    t;
-    char_u  *cp;
+    int valcount = 1;
+    int t;
+    char_u *cp;
 
     if (var[0] == NUL || (var[0] == '0' && var[1] == NUL))
     {
 	*array = NULL;
-	return OK;
+	return TRUE;
     }
 
     for (cp = var; *cp != NUL; ++cp)
@@ -44,8 +43,8 @@ tabstop_set(char_u *var, int **array)
 		if (cp != end)
 		    emsg(_(e_positive));
 		else
-		    semsg(_(e_invarg2), cp);
-		return FAIL;
+		    emsg(_(e_invarg));
+		return FALSE;
 	    }
 	}
 
@@ -56,33 +55,26 @@ tabstop_set(char_u *var, int **array)
 	    ++valcount;
 	    continue;
 	}
-	semsg(_(e_invarg2), var);
-	return FAIL;
+	emsg(_(e_invarg));
+	return FALSE;
     }
 
     *array = ALLOC_MULT(int, valcount + 1);
     if (*array == NULL)
-	return FAIL;
+	return FALSE;
     (*array)[0] = valcount;
 
     t = 1;
     for (cp = var; *cp != NUL;)
     {
-	int n = atoi((char *)cp);
-
-	if (n < 0 || n > 9999)
-	{
-	    semsg(_(e_invarg2), cp);
-	    return FAIL;
-	}
-	(*array)[t++] = n;
-	while (*cp != NUL && *cp != ',')
+	(*array)[t++] = atoi((char *)cp);
+	while (*cp  != NUL && *cp != ',')
 	    ++cp;
 	if (*cp != NUL)
 	    ++cp;
     }
 
-    return OK;
+    return TRUE;
 }
 
 /*
@@ -1599,7 +1591,7 @@ ex_retab(exarg_T *eap)
 
 #ifdef FEAT_VARTABS
     new_ts_str = eap->arg;
-    if (tabstop_set(eap->arg, &new_vts_array) == FAIL)
+    if (!tabstop_set(eap->arg, &new_vts_array))
 	return;
     while (vim_isdigit(*(eap->arg)) || *(eap->arg) == ',')
 	++(eap->arg);
