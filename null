@@ -1,0 +1,6 @@
+error: pathspec '*.hpp' did not match any file(s) known to git
+error: pathspec '*.cc' did not match any file(s) known to git
+error: pathspec '*.cxx' did not match any file(s) known to git
+error: pathspec '*.hh' did not match any file(s) known to git
+error: pathspec '*.C' did not match any file(s) known to git
+error: pathspec '*.H' did not match any file(s) known to git
